@@ -7,12 +7,13 @@
       
 """
 
-__author__ = "Julio Waissman"
-__date__ = "enero 2025"
+__author__ = "Javier Leonardo Miranda Sanchez"
+__date__ = "Febrero 2026"
 
 
 import math
 from collections import Counter
+import random
 
 def entrena_arbol(datos, target, clase_default, 
                   max_profundidad=None, acc_nodo=1.0, min_ejemplos=0,
@@ -60,6 +61,11 @@ def entrena_arbol(datos, target, clase_default,
         clases.most_common(1)[0][1] / len(datos) >= acc_nodo):
         
         return NodoN(terminal=True, clase_default=clase_default)
+
+    #Linea que agarra selecciona aleatoriamente.
+    if type(variables_seleccionadas) == int:
+        atributos = random.sample(atributos, min(variables_seleccionadas, len(atributos)))
+
     
     variable, valor = selecciona_variable_valor(
         datos, target, atributos
@@ -267,7 +273,7 @@ def main():
      
    ]
     
-    raiz = entrena_arbol(datos, "clase", "positiva")
+    raiz = entrena_arbol(datos, "clase", "positiva",variables_seleccionadas=100)
     imprime_arbol(raiz)
     
     acc = evalua_arbol(raiz, datos, "clase")
